@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { Transaction, TransactionFilters, SortOption } from '../types/transaction';
+import type { Transaction, TransactionFilters, SortOption, TransactionCreate } from '../types/transaction';
 import { fetchTransactions, createTransaction } from '../api/transactions';
 
 //import TransactionFiltersComponent from '../components/TransactionFilters';
@@ -22,7 +22,7 @@ export default function TransactionsPage() {
         setTransactions(data);
     }
 
-    async function addTransaction(form: Partial<Transaction>) {
+    async function addTransaction(form: Partial<TransactionCreate>) {
         await createTransaction(form);
         await loadTransactions();
     }
@@ -38,6 +38,7 @@ export default function TransactionsPage() {
             <TransactionList
                 transactions={transactions} 
                 onSelect={transaction => console.log(transaction)}
+                refresh={loadTransactions}
             />
 
             <FAB onClick={() => setIsModalOpen(true)} />

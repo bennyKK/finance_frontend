@@ -1,21 +1,28 @@
+import { deleteTransaction } from '../api/transactions';
 import type { Transaction } from '../types/transaction';
+import SwipeableTransaction from './TransactionSwipeCard';
 
 interface Props {
     transactions: Transaction[];
+    refresh: () => Promise<void>;
     onSelect: (transaction: Transaction) => void;
 }
 
-export default function TransactionList({ transactions, onSelect }: Props) {
+export default function TransactionList({ transactions, refresh, onSelect }: Props) {
     return (
         <div className="space-y-3">
             {transactions.map((transaction) => {
                 const isIncome = transaction.amount > 0;
 
                 return (
-                    <div
+                    <SwipeableTransaction
                         key={transaction.id}
+                        transaction={transaction}
+                        onDelete={ async (id) => { 
+                            await deleteTransaction(id);
+                            await refresh();
+                        }}
                         onClick={() => onSelect(transaction)}
-                        className="flex items-center justify-between bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100 active:scale-[0.98] transition-transform"
                     >
                         <div
                             className={`w-10 h-10 rounded-full flex items-center justify-center text-white ${
@@ -42,7 +49,7 @@ export default function TransactionList({ transactions, onSelect }: Props) {
                                 {transaction.is_paid ? "Bezahlt" : "Offen"}
                             </p>
                         </div>
-                    </div>
+                    </SwipeableTransaction>
                 );
             })}
         </div>

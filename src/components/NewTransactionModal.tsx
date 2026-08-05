@@ -1,18 +1,27 @@
 import { useState } from 'react';
-import type { Transaction } from '../types/transaction';
+import type { TransactionCreate } from '../types/transaction';
 
 interface Props {
     open: boolean;
     onClose: () => void;
-    onCreate: (data: Partial<Transaction>) => void;
+    onCreate: (data: Partial<TransactionCreate>) => void;
 }
 
 export default function NewTransactionModal({ open, onClose, onCreate }: Props) {
-    const [form, setForm] = useState<Partial<Transaction>>({});
+    const [form, setForm] = useState<Partial<TransactionCreate>>({
+        booking_date: '',
+        description: '',
+        amount: 0,
+        currency_id: 1,
+        project_id: null,
+        is_paid: false,
+        account_credit_id: 6,
+        account_debit_id: 7
+    });
 
     if (!open) return null;
 
-    function update<K extends keyof Transaction>(key: K, value: Transaction[K]) {
+    function update<K extends keyof TransactionCreate>(key: K, value: TransactionCreate[K]) {
         setForm({ ...form, [key]: value });
     }
 
