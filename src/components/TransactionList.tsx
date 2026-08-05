@@ -14,6 +14,7 @@ export default function TransactionList({ transactions, onSelect }: Props) {
                 return (
                     <div
                         key={transaction.id}
+                        onClick={() => onSelect(transaction)}
                         className="flex items-center justify-between bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100 active:scale-[0.98] transition-transform"
                     >
                         <div

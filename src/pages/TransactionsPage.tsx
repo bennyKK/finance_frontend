@@ -11,9 +11,9 @@ import NewTransactionModal from '../components/NewTransactionModal';
 
 export default function TransactionsPage() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
-    const [filters, setFilters] = useState<TransactionFilters>({});
-    const [sort, setSort] = useState<SortOption>('booking_date_desc');
-    const [page, setPage] = useState<number>(1);
+    const [filters] = useState<TransactionFilters>({});
+    const [sort] = useState<SortOption>('booking_date_desc');
+    const [page] = useState<number>(1);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     async function loadTransactions() {
